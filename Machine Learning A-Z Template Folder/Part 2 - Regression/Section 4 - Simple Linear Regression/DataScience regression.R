@@ -19,4 +19,34 @@ test_set <- subset(dataset, split == FALSE)
 regressor <- lm(formula = Salary ~ YearsExperience,
                 data = training_set)
 
+# Predicting the Test set results
+y_pred = predict(regressor, newdata = test_set)
+
+# Visualising the Training set results
+
+library(ggplot2)
+
+ggplot() +
+  geom_point(aes(x = training_set$YearsExperience, y = training_set$Salary), 
+             color = 'red') +
+  geom_line(aes(x = training_set$YearsExperience, y =predict(regressor, newdata = training_set) ),
+            color = 'blue') +
+  ggtitle('Salary vs Experience (Training set)') +
+  xlab('Years of experience') +
+  ylab('Salary')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
