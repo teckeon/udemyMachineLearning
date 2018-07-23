@@ -19,23 +19,23 @@ test_set = subset(dataset, split == FALSE)
 training_set[-3] = scale(training_set[-3])
 test_set[-3] = scale(test_set[-3])
 
-# Fitting classifier to the Training set
+# Fitting classifier to the Training set and Predicting Test set results
+library(class)
+y_pred = knn(train = training_set[,-3], test_set[, -3], cl = training_set[ , 3], k =5 )
 
-
-# Predicting the Test set results
-y_pred = predict(classifier, newdata = test_set[-3])
 
 # Making the Confusion Matrix
 cm = table(test_set[, 3], y_pred)
 
 # Visualising the Training set results
+# install.packages("ElemStatLearn")
 library(ElemStatLearn)
 set = training_set
 X1 = seq(min(set[, 1]) - 1, max(set[, 1]) + 1, by = 0.01)
 X2 = seq(min(set[, 2]) - 1, max(set[, 2]) + 1, by = 0.01)
 grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
-y_grid = predict(classifier, newdata = grid_set)
+y_grid = knn(train = training_set[,-3], test = grid_set, cl = training_set[,3], k =5 )
 plot(set[, -3],
      main = 'K-NN (Training set)',
      xlab = 'Age', ylab = 'Estimated Salary',
@@ -51,7 +51,8 @@ X1 = seq(min(set[, 1]) - 1, max(set[, 1]) + 1, by = 0.01)
 X2 = seq(min(set[, 2]) - 1, max(set[, 2]) + 1, by = 0.01)
 grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
-y_grid = predict(classifier, newdata = grid_set)
+y_grid = knn(train = training_set[,-3], test = grid_set, cl = training_set[ , 3], k =5 )
+
 plot(set[, -3], main = 'K-NN (Test set)',
      xlab = 'Age', ylab = 'Estimated Salary',
      xlim = range(X1), ylim = range(X2))
